@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090d">
+<title>RYAN NEWERA — Gaming Tools</title>
+
+<style>
+:root {
+  --bg: #08090d;
+  --panel: #12151d;
+  --border: #2a3040;
+  --text: #f5f6fa;
+  --muted: #969eae;
+  --lime: #b7ff5a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top right, #242b3a, transparent 45%), var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px 15px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: var(--lime);
+  color: #111;
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.brand {
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.status {
+  color: var(--lime);
+  font-size: 11px;
+}
+
+.hero {
+  padding: 32px 0 25px;
+}
+
+.eyebrow {
+  color: var(--lime);
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+h1 {
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.1;
+  margin: 12px 0;
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.stat, .panel {
+  background: linear-gradient(145deg, #151923, #0e1016);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+}
+
+.stat {
+  padding: 15px;
+}
+
+.stat small {
+  color: var(--muted);
+}
+
+.stat strong {
+  display: block;
+  font-size: 24px;
+  margin-top: 8px;
+  color: var(--lime);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.3fr .8fr;
+  gap: 15px;
+  align-items: start;
+}
+
+.panel {
+  padding: 18px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+.tabs {
+  display: flex;
+  gap: 7px;
+  margin: 18px 0;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #1b202b;
+  color: white;
+  padding: 10px 13px;
+  font-weight: bold;
+}
+
+.btn.active, .primary {
+  background: var(--lime);
+  color: #111;
+  border-color: var(--lime);
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 9px;
+  color: #d7dce6;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--lime);
+}
+
+input[type="number"], select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 9px;
+  background: #090b10;
+  border: 1px solid var(--border);
+  color: white;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tool {
+  display: none;
+}
+
+.tool.active {
+  display: block;
+}
+
+.sensi {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-bottom: 17px;
+}
+
+.sensi input {
+  grid-column: 1 / -1;
+}
+
+.sensi output {
+  color: var(--lime);
+  font-weight: bold;
+}
+
+.result {
+  margin: 15px 0;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #090b10;
+}
+
+.result strong {
+  display: block;
+  color: var(--lime);
+  font-size: 29px;
+  margin-top: 5px;
+}
+
+.hud {
+  position: relative;
+  height: 260px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: radial-gradient(ellipse, #293747, #10141b);
+}
+
+.hud:before {
+  content: "HUD PREVIEW · SIMULASI";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #9ba8ba;
+  font-size: 9px;
+}
+
+.hud button {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--lime);
+  border-radius: 50%;
+  background: #b7ff5a22;
+  color: var(--lime);
+  touch-action: none;
+}
+
+.hud button:nth-child(1) { right: 12%; bottom: 18%; }
+.hud button:nth-child(2) { right: 30%; bottom: 38%; }
+.hud button:nth-child(3) { right: 8%; bottom: 48%; }
+.hud button:nth-child(4) { left: 12%; bottom: 20%; }
+
+.note {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.check {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0;
+  align-items: center;
+}
+
+.check input {
+  accent-color: var(--lime);
+}
+
+footer {
+  margin-top: 15px;
+  padding: 15px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: var(--lime);
+  color: #111;
+  font-weight: bold;
+  display: none;
+  max-width: 90%;
+}
+
+@media(max-width:750px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .hero {
+    padding-top: 25px;
+  }
+}
+
+@media(max-width:430px) {
+  .stats {
+    gap: 7px;
+  }
+  .stat {
+    padding: 11px;
+  }
+  .stat strong {
+    font-size: 20px;
+  }
+  .panel {
+    padding: 14px;
+  }
+  .tabs .btn {
+    flex: 1;
+    padding: 9px 5px;
+    font-size: 11px;
+  }
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">RN</div>
+    <div>
+      <div class="brand">RYAN NEWERA</div>
+      <div class="subtitle">FREE FIRE GAMING TOOLS</div>
+    </div>
+  </div>
+  <div class="status">● TOOLS READY</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">PLAYER CONFIGURATION / 01</div>
+  <h1>Play your way.<br>Fine-tune your setup.</h1>
+  <p>
+    Atur sensitivitas, hitung DPI, dan susun preview HUD
+    sesuai gaya bermainmu.
+  </p>
+</section>
+
+<section class="stats">
+  <div class="stat">
+    <small>PRESET</small>
+    <strong id="presetStat">Balanced</strong>
+  </div>
+  <div class="stat">
+    <small>DPI TARGET</small>
+    <strong id="dpiStat">420</strong>
+  </div>
+  <div class="stat">
+    <small>HUD CONTROLS</small>
+    <strong>4</strong>
+  </div>
+</section>
+
+<div class="layout">
+<main>
+
+<section class="panel">
+  <h2>Player Setup</h2>
+  <p class="note">Pengaturan personal yang dapat kamu sesuaikan.</p>
+
+  <div class="tabs">
+    <button class="btn active" data-tab="sensi">Sensitivity</button>
+    <button class="btn" data-tab="dpi">DPI Calc</button>
+    <button class="btn" data-tab="hud">HUD Layout</button>
+  </div>
+
+  <div class="tool active" id="sensi">
+    <div class="field">
+      <label for="preset">Pilih preset sensitivitas</label>
+      <select id="preset">
+        <option value="balanced">Balanced</option>
+        <option value="rush">Rush</option>
+        <option value="precision">Precision</option>
+      </select>
+    </div>
+
+    <div id="sensiList"></div>
+
+    <div class="actions">
+      <button class="btn primary" id="applyPreset">Terapkan Preset</button>
+      <button class="btn" id="copySensi">Salin Setting</button>
+      <button class="btn" id="resetSensi">Reset</button>
+    </div>
+  </div>
+
+  <div class="tool" id="dpi">
+    <div class="row">
+      <div class="field">
+        <label for="currentDpi">DPI saat ini</label>
+        <input id="currentDpi" type="number" min="100" max="1000" value="420">
+      </div>
+      <div class="field">
+        <label for="scale">Faktor skala</label>
+        <select id="scale">
+          <option value="0.8">0.8×</option>
+          <option value="0.9">0.9×</option>
+          <option value="1" selected>1.0×</option>
+          <option value="1.1">1.1×</option>
+          <option value="1.2">1.2×</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="maxDpi">Batas DPI target</label>
+      <input id="maxDpi" type="number" min="200" max="1000" value="600">
+    </div>
+
+    <div class="result">
+      Target DPI
+      <strong id="dpiResult">420</strong>
+      <p id="dpiExplain" class="note">Hasil perhitungan akan tampil di sini.</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="calcDpi">Hitung DPI</button>
+      <button class="btn" id="copyDpi">Salin Hasil</button>
+    </div>
+  </div>
+
+  <div class="tool" id="hud">
+    <p class="note">Tekan dan geser tombol untuk mengatur posisi preview HUD.</p>
+
+    <div class="hud" id="hudScreen">
+      <button type="button">FIRE</button>
+      <button type="button">AIM</button>
+      <button type="button">JUMP</button>
+      <button type="button">MOVE</button>
+    </div>
+
+    <div class="field" style="margin-top:18px">
+      <label for="hudSize">Ukuran tombol: <span id="hudSizeValue">100%</span></label>
+      <input type="range" id="hudSize" min="70" max="130" value="100">
+    </div>
+
+    <button class="btn" id="resetHud">Reset HUD</button>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Checklist Latihan</h2>
+  <p class="note">Checklist ini tersimpan secara lokal di browser.</p>
+
+  <label class="check">
+    <input type="checkbox" id="training">
+    Latihan aim sebelum bermain
+  </label>
+
+  <label class="check">
+    <input type="checkbox" id="comfort">
+    Pastikan kontrol nyaman
+  </label>
+
+  <label class="check">
+    <input type="checkbox" id="gradual">
+    Ubah setting secara bertahap
+  </label>
+
+  <div class="actions">
+    <button class="btn primary" id="saveChecklist">Simpan Checklist</button>
+    <button class="btn" id="clearChecklist">Bersihkan</button>
+  </div>
+</section>
+
+</main>
+
+<aside>
+  <section class="panel">
+    <h2>Setup Summary</h2>
+    <p class="note">Ringkasan konfigurasi saat ini.</p>
+    <div id="summary"></div>
+
+    <div class="actions">
+      <button class="btn primary" id="exportAll">Ekspor JSON</button>
+      <button class="btn" id="resetAll">Reset Semua</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>About This Tool</h2>
+    <p>
+      RYAN NEWERA Gaming Tools adalah alat bantu konfigurasi
+      personal. Tidak memodifikasi game dan tidak menjamin
+      performa tertentu.
+    </p>
+    <p class="note">
+      Data disimpan di browser perangkat ini. Tidak diperlukan akun.
+    </p>
+  </section>
+</aside>
+</div>
+
+<footer>
+  <span>© <span id="year"></span> RYAN NEWERA</span>
+  <span>BUILD 1.0 · FAIR PLAY</span>
+</footer>
+</div>
+
+<div id="toast" role="status"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  const storageKey = "ryanNeweraGamingTools";
+
+  const defaults = {
+    "General": 90,
+    "Red Dot": 85,
+    "2x Scope": 80,
+    "4x Scope": 75,
+    "Sniper Scope": 50,
+    "Free Look": 70
+  };
+
+  const presets = {
+    balanced: {...defaults},
+    rush: {
+      "General": 98, "Red Dot": 92, "2x Scope": 88,
+      "4x Scope": 80, "Sniper Scope": 55, "Free Look": 78
+    },
+    precision: {
+      "General": 82, "Red Dot": 78, "2x Scope": 72,
+      "4x Scope": 65, "Sniper Scope": 42, "Free Look": 62
+    }
+  };
+
+  let sensitivity = {...defaults};
+  let toastTimer;
+
+  function toast(message) {
+    $("toast").textContent = message;
+    $("toast").style.display = "block";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      $("toast").style.display = "none";
+    }, 2200);
+  }
+
+  function save() {
+    const data = {
+      sensitivity,
+      preset: $("preset").value,
+      dpi: $("currentDpi").value,
+      scale: $("scale").value,
+      maxDpi: $("maxDpi").value,
+      checklist: {
+        training: $("training").checked,
+        comfort: $("comfort").checked,
+        gradual: $("gradual").checked
+      }
+    };
+
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(data));
+    } catch (error) {}
+  }
+
+  function load() {
+    try {
+      const data = JSON.parse(localStorage.getItem(storageKey));
+      if (!data) return;
+
+      if (data.sensitivity) {
+        sensitivity = {...defaults, ...data.sensitivity};
+      }
+
+      if (data.preset) $("preset").value = data.preset;
+      if (data.dpi) $("currentDpi").value = data.dpi;
+      if (data.scale) $("scale").value = data.scale;
+      if (data.maxDpi) $("maxDpi").value = data.maxDpi;
+
+      if (data.checklist) {
+        $("training").checked = !!data.checklist.training;
+        $("comfort").checked = !!data.checklist.comfort;
+        $("gradual").checked = !!data.checklist.gradual;
+      }
+    } catch (error) {}
+  }
+
+  function renderSensitivity() {
+    const list = $("sensiList");
+    list.replaceChildren();
+
+    Object.entries(sensitivity).forEach(([name, value]) => {
+      const row = document.createElement("div");
+      row.className = "sensi";
+
+      const label = document.createElement("label");
+      label.textContent = name;
+
+      const output = document.createElement("output");
+      output.textContent = value;
+
+      const range = document.createElement("input");
+      range.type = "range";
+      range.min = 0;
+      range.max = 200;
+      range.value = value;
+      range.setAttribute("aria-label", name);
+
+      range.addEventListener("input", () => {
+        sensitivity[name] = Number(range.value);
+        output.textContent = range.value;
+        updateSummary();
+        save();
+      });
+
+      row.append(label, output, range);
+      list.appendChild(row);
+    });
+
+    updateSummary();
+  }
+
+  function updateSummary() {
+    $("presetStat").textContent =
+      $("preset").options[$("preset").selectedIndex].text;
+
+    $("dpiStat").textContent = $("dpiResult").textContent;
+
+    $("summary").replaceChildren();
+
+    const values = {
+      Preset: $("presetStat").textContent,
+      ...sensitivity,
+      "Target DPI": $("dpiResult").textContent
+    };
+
+    Object.entries(values).forEach(([key, value]) => {
+      const line = document.createElement("p");
+      line.style.margin = "10px 0";
+      line.style.fontSize = "12px";
+
+      const label = document.createElement("strong");
+      label.textContent = key + ": ";
+
+      line.append(label, document.createTextNode(value));
+      $("summary").appendChild(line);
+    });
+  }
+
+  function applyPreset() {
+    sensitivity = {...presets[$("preset").value]};
+    renderSensitivity();
+    save();
+    toast("Preset diterapkan!");
+  }
+
+  function calculateDpi() {
+    const dpi = Number($("currentDpi").value);
+    const scale = Number($("scale").value);
+    const cap = Number($("maxDpi").value);
+
+    if (dpi < 100 || dpi > 1000 || !Number.isFinite(dpi)) {
+      toast("Masukkan DPI antara 100–1000.");
+      return;
+    }
+
+    if (cap < 200 || cap > 1000 || !Number.isFinite(cap)) {
+      toast("Batas DPI harus 200–1000.");
+      return;
+    }
+
+    const target = Math.round(Math.min(cap, dpi * scale));
+
+    $("dpiResult").textContent = target;
+    $("dpiExplain").textContent =
+      `${dpi} × ${scale}, dengan batas maksimum ${cap} DPI.`;
+
+    updateSummary();
+    save();
+  }
+
+  document.querySelectorAll("[data-tab]").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("[data-tab]").forEach(tab => {
+        tab.classList.toggle("active", tab === button);
+      });
+
+      document.querySelectorAll(".tool").forEach(tool => {
+        tool.classList.toggle("active", tool.id === button.dataset.tab);
+      });
+    });
+  });
+
+  $("applyPreset").addEventListener("click", applyPreset);
+
+  $("preset").addEventListener("change", () => {
+    updateSummary();
+    save();
+  });
+
+  $("resetSensi").addEventListener("click", () => {
+    sensitivity = {...defaults};
+    $("preset").value = "balanced";
+    renderSensitivity();
+    save();
+    toast("Sensitivitas direset.");
+  });
+
+  $("copySensi").addEventListener("click", async () => {
+    const text = Object.entries(sensitivity)
+      .map(([name, value]) => `${name}: ${value}`)
+      .join("\n");
+
+    try {
+      await navigator.clipboard.writeText(text);
+      toast("Setting berhasil disalin.");
+    } catch (error) {
+      toast("Salin setting secara manual.");
+    }
+  });
+
+  $("calcDpi").addEventListener("click", calculateDpi);
+  $("scale").addEventListener("change", calculateDpi);
+  $("currentDpi").addEventListener("change", calculateDpi);
+  $("maxDpi").addEventListener("change", calculateDpi);
+
+  $("copyDpi").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(
+        "Target DPI: " + $("dpiResult").textContent
+      );
+      toast("DPI berhasil disalin.");
+    } catch (error) {
+      toast("Target DPI: " + $("dpiResult").textContent);
+    }
+  });
+
+  const hudScreen = $("hudScreen");
+  let dragging = null;
+
+  hudScreen.querySelectorAll("button").forEach(button => {
+    button.addEventListener("pointerdown", event => {
+      dragging = {
+        button,
+        x: event.clientX,
+        y: event.clientY,
+        left: button.offsetLeft,
+        top: button.offsetTop
+      };
+
+      button.setPointerCapture(event.pointerId);
+    });
+
+    button.addEventListener("pointermove", event => {
+      if (!dragging || dragging.button !== button) return;
+
+      const bounds = hudScreen.getBoundingClientRect();
+
+      const x = Math.max(
+        0,
+        Math.min(
+          bounds.width - button.offsetWidth,
+          dragging.left + event.clientX - dragging.x
+        )
+      );
+
+      const y = Math.max(
+        0,
+        Math.min(
+          bounds.height - button.offsetHeight,
+          dragging.top + event.clientY - dragging.y
+        )
+      );
+
+      button.style.left = (x / bounds.width * 100) + "%";
+      button.style.top = (y / bounds.height * 100) + "%";
+      button.style.right = "auto";
+      button.style.bottom = "auto";
+    });
+
+    button.addEventListener("pointerup", () => {
+      dragging = null;
+    });
+
+    button.addEventListener("pointercancel", () => {
+      dragging = null;
+    });
+  });
+
+  $("hudSize").addEventListener("input", () => {
+    const size = Number($("hudSize").value);
+
+    $("hudSizeValue").textContent = size + "%";
+
+    hudScreen.querySelectorAll("button").forEach(button => {
+      button.style.transform = `scale(${size / 100})`;
+    });
+  });
+
+  $("resetHud").addEventListener("click", () => {
+    hudScreen.querySelectorAll("button").forEach(button => {
+      button.style.left = "";
+      button.style.top = "";
+      button.style.right = "";
+      button.style.bottom = "";
+      button.style.transform = "";
+    });
+
+    const buttons = hudScreen.querySelectorAll("button");
+
+    buttons[0].style.right = "12%";
+    buttons[0].style.bottom = "18%";
+    buttons[1].style.right = "30%";
+    buttons[1].style.bottom = "38%";
+    buttons[2].style.right = "8%";
+    buttons[2].style.bottom = "48%";
+    buttons[3].style.left = "12%";
+    buttons[3].style.bottom = "20%";
+
+    $("hudSize").value = 100;
+    $("hudSizeValue").textContent = "100%";
+
+    toast("Preview HUD direset.");
+  });
+
+  $("saveChecklist").addEventListener("click", () => {
+    save();
+    toast("Checklist tersimpan.");
+  });
+
+  $("clearChecklist").addEventListener("click", () => {
+    ["training", "comfort", "gradual"].forEach(id => {
+      $(id).checked = false;
+    });
+
+    save();
+    toast("Checklist dibersihkan.");
+  });
+
+  $("exportAll").addEventListener("click", () => {
+    const data = {
+      app: "RYAN NEWERA Gaming Tools",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      preset: $("preset").value,
+      sensitivity,
+      dpi: {
+        current: Number($("currentDpi").value),
+        scale: Number($("scale").value),
+        target: Number($("dpiResult").textContent)
+      },
+      checklist: {
+        training: $("training").checked,
+        comfort: $("comfort").checked,
+        gradual: $("gradual").checked
+      }
+    };
+
+    const blob = new Blob(
+      [JSON.stringify(data, null, 2)],
+      {type: "application/json"}
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "ryan-newera-config.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
+    toast("Konfigurasi diekspor.");
+  });
+
+  $("resetAll").addEventListener("click", () => {
+    if (!confirm("Reset semua konfigurasi?")) return;
+
+    localStorage.removeItem(storageKey);
+    location.reload();
+  });
+
+  $("year").textContent = new Date().getFullYear();
+
+  load();
+  renderSensitivity();
+  calculateDpi();
+})();
+</script>
+</body>
+</html>
